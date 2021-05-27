@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { v4 as uuid } from 'uuid'
+import { v4 as uuid } from 'uuid';
+import NewBoxForm from './NewBoxForm';
+import Box from './Box';
 
 /** BoxList 
  * Props: None
@@ -25,17 +27,27 @@ function BoxList() {
    * Adds box to boxes with unique id
    */
   function addBox(box) {
-    let newBox = {...box, id: uuid() }
+    let newBox = { ...box, id: uuid() } //be consistent about variable decs, use const
     setBoxes(boxes => [...boxes, newBox]);
   }
 
+  //could put our map below on 39 into a variable to evaluate, it's a lil cleaner
+
   return (
     <div>
-      <NewBoxForm />
-      {
-
-      }
+      <NewBoxForm addBox={addBox} />
+      {boxes.map(box =>
+        <Box 
+          height={box.height} 
+          width={box.width} 
+          color={box.color} 
+          id={box.id}
+          key={box.id}
+          removeBox= {removeBox}/>
+      )}
     </div>
   )
 
 }
+
+export default BoxList;
